@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Welcome to Firebase Hosting</title>
+    <script defer src="/__/firebase/5.5.4/firebase-app.js"></script>
+    <script defer src="/__/firebase/5.5.4/firebase-database.js"></script>
+    <script defer src="/__/firebase/init.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <h1>Welcome the time is <span id="time">...</span></h1>
+    <script>
+    $(document).ready(function(){
+      var timeRef = firebase.database().ref().child("time");
+      console.log("starting up");
+      timeRef.on("value", function(snap){
+        $("#time").html(snap.val());
+      });
+      
+      var repeatedFunction = setInterval(function(){
+        var now = new Date();
+        timeRef.set(now.toLocaleString());
+      }, 3000);
+    });
+    </script>
+  </body>
+</html>
